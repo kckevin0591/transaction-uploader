@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionUploader.WebApp", "TransactionUploader.WebApp\TransactionUploader.WebApp.csproj", "{B5D3E42D-4E1C-410E-AA99-685111789D88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionUploader.Services", "TransactionUploader.Services\TransactionUploader.Services.csproj", "{F59AB50B-CECE-4398-9E0F-F2A4AB594362}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionUploader.Repository.EF", "TransactionUploader.Repository.EF\TransactionUploader.Repository.EF.csproj", "{DD31D390-D81B-4094-AD51-890B73AEDB62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionUploader.Services.Tests", "TransactionUploader.Services.Tests\TransactionUploader.Services.Tests.csproj", "{E47C76A0-33FC-47C9-8E9B-C85440DA3956}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionUploader.Repository", "TransactionUploader.Repository\TransactionUploader.Repository.csproj", "{356066DB-ABA7-467A-9CE8-420707329D2D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionUploader.Common", "TransactionUploader.Common\TransactionUploader.Common.csproj", "{BFFC125A-11D7-4495-AAB3-04A304D6EB6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5D3E42D-4E1C-410E-AA99-685111789D88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D3E42D-4E1C-410E-AA99-685111789D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D3E42D-4E1C-410E-AA99-685111789D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D3E42D-4E1C-410E-AA99-685111789D88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F59AB50B-CECE-4398-9E0F-F2A4AB594362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F59AB50B-CECE-4398-9E0F-F2A4AB594362}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F59AB50B-CECE-4398-9E0F-F2A4AB594362}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F59AB50B-CECE-4398-9E0F-F2A4AB594362}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD31D390-D81B-4094-AD51-890B73AEDB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD31D390-D81B-4094-AD51-890B73AEDB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD31D390-D81B-4094-AD51-890B73AEDB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD31D390-D81B-4094-AD51-890B73AEDB62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E47C76A0-33FC-47C9-8E9B-C85440DA3956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E47C76A0-33FC-47C9-8E9B-C85440DA3956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E47C76A0-33FC-47C9-8E9B-C85440DA3956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E47C76A0-33FC-47C9-8E9B-C85440DA3956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{356066DB-ABA7-467A-9CE8-420707329D2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{356066DB-ABA7-467A-9CE8-420707329D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{356066DB-ABA7-467A-9CE8-420707329D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{356066DB-ABA7-467A-9CE8-420707329D2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFFC125A-11D7-4495-AAB3-04A304D6EB6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFFC125A-11D7-4495-AAB3-04A304D6EB6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFFC125A-11D7-4495-AAB3-04A304D6EB6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFFC125A-11D7-4495-AAB3-04A304D6EB6A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B0A8E35-EF53-459D-932F-1ACDCB054524}
+	EndGlobalSection
+EndGlobal
