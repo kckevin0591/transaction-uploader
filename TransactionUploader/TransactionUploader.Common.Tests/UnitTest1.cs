@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace TransactionUploader.Services.Tests
+namespace TransactionUploader.Common.Tests
 {
     [TestClass]
     public class UnitTest1
