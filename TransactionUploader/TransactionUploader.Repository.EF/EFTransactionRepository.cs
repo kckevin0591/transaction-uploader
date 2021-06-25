@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TransactionUploader.Repository.EF.Models;
 using Transaction = TransactionUploader.Common.Transaction;
 
@@ -29,6 +30,48 @@ namespace TransactionUploader.Repository.EF
 
             _context.Transactions.AddRange(dbTxns);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Transaction>> GetByCurrency(string currencyCode)
+        {
+            return _context.Transactions.
+                Where(t => t.CurrencyCode == currencyCode)
+                .Select(a=> new Transaction()
+                {
+                    TransactionId = a.Id,
+                    TransactionDate = a.TransactionDate,
+                    Amount = Convert.ToDecimal(a.Amount),
+                    CurrencyCode = a.CurrencyCode,
+                    Status = a.Status
+                });
+        }
+
+        public async Task<IEnumerable<Transaction>> GetByStatus(string status)
+        {
+            return await _context.Transactions.
+                Where(t => t.Status == status)
+                .Select(a=> new Transaction()
+                {
+                    TransactionId = a.Id,
+                    TransactionDate = a.TransactionDate,
+                    Amount = Convert.ToDecimal(a.Amount),
+                    CurrencyCode = a.CurrencyCode,
+                    Status = a.Status
+                }).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Transaction>> GetDateRange(DateTime startDate, DateTime endDate)
+        {
+            return _context.Transactions.
+                Where(t => t.TransactionDate >= startDate && t.TransactionDate <= endDate)
+                .Select(a=> new Transaction()
+                {
+                    TransactionId = a.Id,
+                    TransactionDate = a.TransactionDate,
+                    Amount = Convert.ToDecimal(a.Amount),
+                    CurrencyCode = a.CurrencyCode,
+                    Status = a.Status
+                });
         }
     }
 }
