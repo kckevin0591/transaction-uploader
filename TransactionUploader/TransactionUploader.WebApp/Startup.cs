@@ -8,7 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using TransactionUploader.Repository.EF.Models;
 using TransactionUploader.Services;
+using TransactionUploader.Common;
+using TransactionUploader.Repository;
+using TransactionUploader.Repository.EF;
 
 namespace TransactionUploader.WebApp
 {
@@ -24,7 +29,12 @@ namespace TransactionUploader.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigureTransactionUploader();
+            services.AddDbContext<test_dbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("TransactionDatabase")));
+
+            services.AddTransient<IExtractorManager, ExtractorManager>();
+            services.AddTransient<ITransactionRepository, EFTransactionRepository>();
+            services.AddTransient<ITransactionUploaderService, TransactionUploaderService>();
             services.AddControllersWithViews();
         }
 
