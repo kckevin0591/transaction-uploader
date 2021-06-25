@@ -6,6 +6,6 @@ namespace TransactionUploader.Repository
 {
     public interface ITransactionRepository
     {
-        Task<RepositoryStatus> Save(IEnumerable<Transaction> transactions);
+        Task Save(IEnumerable<Transaction> transactions);
     }
 }
