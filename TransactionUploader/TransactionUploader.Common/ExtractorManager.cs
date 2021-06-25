@@ -1,5 +1,6 @@
 ﻿using TransactionUploader.Common.Exceptions;
 using TransactionUploader.Common.Extractors;
+using TransactionUploader.Common.Extractors.CSV;
 using TransactionUploader.Common.Extractors.XML;
 
 namespace TransactionUploader.Common
@@ -11,6 +12,8 @@ namespace TransactionUploader.Common
             //for simplicity we just use if-else
             if (fileType == "xml")
                 return new XmlExtractor();
+            if (fileType == "csv")
+                return new CsvExtractor();
 
             throw new InvalidFileTypeException($"No extractor found for {fileType} file");
         }

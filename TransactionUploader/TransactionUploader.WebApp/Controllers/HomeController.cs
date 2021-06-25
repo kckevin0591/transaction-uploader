@@ -41,13 +41,13 @@ namespace TransactionUploader.WebApp.Controllers
 
             await using (var dataStream = new MemoryStream())
             {
-                var fileType = model.File.ContentType.ToLower().Split('/');
+                var fileType = Path.GetExtension(model.File.FileName).ToLower().Replace(".","");
                 await model.File.CopyToAsync(dataStream);
                 dataStream.Seek(0, SeekOrigin.Begin);
                 using (var reader = new StreamReader(dataStream, Encoding.UTF8))
                 {
                     var dataString = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    await _transactionUploader.Upload(fileType[1], dataString);
+                    await _transactionUploader.Upload(fileType, dataString);
                 }
             }
 
