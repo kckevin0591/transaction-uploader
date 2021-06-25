@@ -1,5 +1,6 @@
 ﻿using TransactionUploader.Common.Exceptions;
 using TransactionUploader.Common.Extractors;
+using TransactionUploader.Common.Extractors.XML;
 
 namespace TransactionUploader.Common
 {
