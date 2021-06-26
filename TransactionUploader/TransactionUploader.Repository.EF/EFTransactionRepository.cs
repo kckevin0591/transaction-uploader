@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TransactionUploader.Common;
+using TransactionUploader.Common.Exceptions;
 using TransactionUploader.Repository.EF.Models;
 using Transaction = TransactionUploader.Common.Transaction;
 
@@ -20,17 +21,25 @@ namespace TransactionUploader.Repository.EF
 
         public async Task Save(IEnumerable<Transaction> transactions)
         {
-            var dbTxns = transactions.Select(t => new TransactionUploader.Repository.EF.Models.Transaction()
+            try
             {
-                Id = t.TransactionId,
-                TransactionDate = t.TransactionDate,
-                Amount = Convert.ToDouble(t.Amount),
-                Status = t.Status,
-                CurrencyCode = t.CurrencyCode
-            });
+                var dbTxns = transactions.Select(t => new TransactionUploader.Repository.EF.Models.Transaction()
+                {
+                    Id = t.TransactionId,
+                    TransactionDate = t.TransactionDate,
+                    Amount = Convert.ToDouble(t.Amount),
+                    Status = t.Status,
+                    CurrencyCode = t.CurrencyCode
+                });
 
-            _context.Transactions.AddRange(dbTxns);
-            await _context.SaveChangesAsync();
+                _context.Transactions.AddRange(dbTxns);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new StorageFailureException(e.Message, e);
+            }
+
         }
 
         public async Task<IEnumerable<Transaction>> GetByCurrency(string currencyCode)
@@ -83,6 +92,19 @@ namespace TransactionUploader.Repository.EF
                     t.TransactionDate <= filter.EndDate &&
                     t.Status == filter.Status &&
                     t.CurrencyCode == filter.CurrencyCode)
+                .Select(a=> new Transaction()
+                {
+                    TransactionId = a.Id,
+                    TransactionDate = a.TransactionDate,
+                    Amount = Convert.ToDecimal(a.Amount),
+                    CurrencyCode = a.CurrencyCode,
+                    Status = a.Status
+                }).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Transaction>> GetAll()
+        {
+            return await _context.Transactions
                 .Select(a=> new Transaction()
                 {
                     TransactionId = a.Id,

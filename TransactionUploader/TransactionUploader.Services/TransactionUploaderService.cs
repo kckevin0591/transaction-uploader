@@ -26,5 +26,6 @@ namespace TransactionUploader.Services
             var transactions = _extractorManager.GetExtractor(fileType).Extract(data);   
             await _transactionRepository.Save(transactions).ConfigureAwait(false);   
         }
+
     }
 }

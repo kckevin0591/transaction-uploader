@@ -108,8 +108,7 @@ namespace TransactionUploader.Common.Extractors.CSV
 
             if (errors.Any())
             {
-                var errorSummary = string.Join(',', errors);
-                throw new InvalidFileContentException($"Found error(s) in the file: {errorSummary}");
+                throw new InvalidFileContentException($"Found error(s) in the file.", errors);
             }
 
             return txns;

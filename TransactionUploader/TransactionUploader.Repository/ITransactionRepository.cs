@@ -12,5 +12,6 @@ namespace TransactionUploader.Repository
         Task<IEnumerable<Transaction>> GetByStatus(string status);
         Task<IEnumerable<Transaction>> GetDateRange(DateTime startDate, DateTime endDate);
         Task<IEnumerable<Transaction>> GetByFilter(TransactionFilter filter);
+        Task<IEnumerable<Transaction>> GetAll();
     }
 }

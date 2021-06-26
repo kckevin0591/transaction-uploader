@@ -16,7 +16,7 @@ namespace TransactionUploader.Common.Extractors.XML
         public IEnumerable<Transaction> Extract(string data)
         {
             if (string.IsNullOrEmpty(data))
-                throw new InvalidFileContentException("File is empty");
+                throw new InvalidFileContentException("File is empty", errors:new List<string>());
 
             var xmlTxns = ExtractXmlList(data);
 
@@ -90,8 +90,7 @@ namespace TransactionUploader.Common.Extractors.XML
 
             if (errors.Any())
             {
-                var errorSummary = string.Join(',', errors);
-                throw new InvalidFileContentException($"Found error(s) in the file: {errorSummary}");
+                throw new InvalidFileContentException($"Found error(s) in the file.", errors);
             }
 
             return txns;
@@ -119,13 +118,17 @@ namespace TransactionUploader.Common.Extractors.XML
                 var serializer = new XmlSerializer(typeof(XmlTransactionList));
                 using (var reader = new StringReader(data))
                 {
-                    var xmlList = (XmlTransactionList)serializer.Deserialize(reader);
+                    var xmlList = (XmlTransactionList) serializer.Deserialize(reader);
                     return xmlList.XmlTransactions;
                 }
             }
             catch (InvalidOperationException e)
             {
-                throw new InvalidFileContentException("Failed to parse the file", e);
+                throw new InvalidFileContentException("Failed to parse the file", new List<string>(), e);
+            }
+            catch (NullReferenceException e)
+            {
+                throw new InvalidFileContentException("Failed to parse the file", new List<string>(), e);
             }
 
         }
