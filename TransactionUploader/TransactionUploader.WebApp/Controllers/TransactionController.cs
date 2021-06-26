@@ -28,6 +28,7 @@ namespace TransactionUploader.WebApp.Controllers
         }
 
         [HttpPost]
+        [RequestSizeLimit(1048576)]
         public async Task<IActionResult> Upload(IFormFile file)
         {
             
@@ -55,31 +56,22 @@ namespace TransactionUploader.WebApp.Controllers
         public async Task<IActionResult> ByCurrency(string currency)
         {
             var txns = await _transactionRepository.GetByCurrency(currency).ConfigureAwait(false);
-            return new JsonResult(txns.Select(ConvertToApiTransactionModel));
+            return new JsonResult(txns.Select(t=>t.ConvertToApiTransactionModel()));
         }
 
         [HttpGet("{status}")]
         public async Task<IActionResult> ByStatus(string status)
         {
             var txns = await _transactionRepository.GetByStatus(status).ConfigureAwait(false);
-            return new JsonResult(txns.Select(ConvertToApiTransactionModel));
+            return new JsonResult(txns.Select(t=>t.ConvertToApiTransactionModel()));
         }
 
         [HttpGet]
         public async Task<IActionResult> ByDate(DateTime startDate, DateTime endDate)
         {
             var txns = await _transactionRepository.GetDateRange(startDate, endDate).ConfigureAwait(false);
-            return new JsonResult(txns.Select(ConvertToApiTransactionModel));
+            return new JsonResult(txns.Select(t=>t.ConvertToApiTransactionModel()));
         }
 
-        private static ApiTransactionModel ConvertToApiTransactionModel(Transaction txn)
-        {
-            return new ApiTransactionModel()
-            {
-                Id = txn.TransactionId,
-                Status = txn.Status,
-                Payment = $"{txn.Amount} {txn.CurrencyCode}"
-            };
-        }
     }
 }

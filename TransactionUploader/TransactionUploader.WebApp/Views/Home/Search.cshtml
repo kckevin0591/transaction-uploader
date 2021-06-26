@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Transactions view";
+}
+@model TransactionUploader.WebApp.Models.TransactionFilterModel
+
+<h1>Find Transactions</h1>
+
+<div>
+    <div>
+        <form id="formSearch" asp-action="GetTransactions" asp-controller="Home"
+              data-ajax-update="#table-container"
+              data-ajax="true"
+              data-ajax-complete="SearchAjax.OnComplete">
+            <div class="form-group">
+                <label>Currency Code</label>
+                <input type="text" class="form-control" asp-for="CurrencyCode" placeholder="Enter Currency code">
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select class="form-control" asp-for="Status">
+                    <option>A</option>
+                    <option>R</option>
+                    <option>D</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="text" class="form-control datepicker" asp-for="StartDate" placeholder="Set Start Date">
+            </div>
+            <div class="form-group">
+                <label>End Date</label>
+                <input type="text" class="form-control datepicker" asp-for="EndDate" placeholder="Set End Date">
+            </div>
+            <button id="btnSearch" type="button" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    <br/>
+    <div id="table-container">
+        
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(function() {
+            $('.datepicker').datepicker({
+            });
+
+            $('#btnSearch').click(function() {
+                $('#formSearch').submit();
+            });
+        })
+    </script>
+
+}

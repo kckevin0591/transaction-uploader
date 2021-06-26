@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<form asp-action="Upload" asp-controller="Transaction" 
+      enctype="multipart/form-data"
+      data-ajax="true"
+      data-ajax-begin="UploadAjax.OnBegin"
+      data-ajax-complete="UploadAjax.OnComplete"
+      >
+    <div class="form-group">
+        <label>File name</label>
+        <input type="file" class="form-control-file" name="File">
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+
+<div id="displayError" class="alert alert-danger invisible" role="alert">
+    Error here
+</div>
+
+<div id="displaySuccess" class="alert alert-success invisible" role="alert">
+    Upload Successful
+</div>
+
+

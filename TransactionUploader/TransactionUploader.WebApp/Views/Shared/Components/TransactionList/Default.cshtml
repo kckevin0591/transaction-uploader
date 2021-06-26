@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model TransactionUploader.WebApp.Models.SearchTransactionViewModel
+
+<table id="tblTransactions" class="table">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Payment</th>
+        <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var txn in Model.Transactions)
+    {
+        <tr>
+            <th scope="row">@txn.Id</th>
+            <td>@txn.Payment</td>
+            <td>@txn.Status</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script>
+        $('#tblTransactions').DataTable();
+    </script>
+}

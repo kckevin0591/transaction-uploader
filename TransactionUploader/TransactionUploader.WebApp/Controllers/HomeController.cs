@@ -7,57 +7,55 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TransactionUploader.Services;
+using TransactionUploader.Common;
+using TransactionUploader.Repository;
 using TransactionUploader.WebApp.Models;
 
 namespace TransactionUploader.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ITransactionUploaderService _transactionUploader;
+        private readonly ITransactionRepository _transactionRepository;
 
         public HomeController(ILogger<HomeController> logger,
-        ITransactionUploaderService transactionUploader)
+        ITransactionRepository transactionRepository)
         {
-            _logger = logger;
-            _transactionUploader = transactionUploader;
+            _transactionRepository = transactionRepository;
         }
 
-        [HttpGet]
+        
         public IActionResult Index()
         {
             return View(new UploadViewModel());
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Index(UploadViewModel model)
+        public IActionResult Search()
         {
-            
-            if (model.File == null || model.File.Length == 0)
+            var filter = new TransactionFilterModel()
             {
-                return BadRequest("File Not Found");
-            }
-
-            await using (var dataStream = new MemoryStream())
-            {
-                var fileType = Path.GetExtension(model.File.FileName).ToLower().Replace(".","");
-                await model.File.CopyToAsync(dataStream);
-                dataStream.Seek(0, SeekOrigin.Begin);
-                using (var reader = new StreamReader(dataStream, Encoding.UTF8))
-                {
-                    var dataString = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    await _transactionUploader.Upload(fileType, dataString);
-                }
-            }
-
-            model.IsSuccess = true;
-            return Ok();
+                Status = "A",
+                CurrencyCode = "USD",
+                StartDate = new DateTime(2018,1,1,0,0,0,DateTimeKind.Local),
+                EndDate = DateTime.Now
+            };
+            return View(filter);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> GetTransactions(TransactionFilterModel filter)
         {
-            return View();
+            var txns = await _transactionRepository.GetByFilter(new TransactionFilter()
+            {
+                Status = filter.Status,
+                CurrencyCode = filter.CurrencyCode,
+                StartDate = filter.StartDate,
+                EndDate = filter.EndDate
+            });
+
+            var model = new SearchTransactionViewModel
+            {
+                Transactions = txns.Select(t=> t.ConvertToApiTransactionModel()).ToList()
+            };
+            return ViewComponent("TransactionList", model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
